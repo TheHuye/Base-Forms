@@ -1,6 +1,7 @@
 {
   "name": "base-forms",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -14,7 +15,11 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "@types/express": "^4.17.21",
     "concurrently": "^8.2.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2",
     "nodemon": "^3.1.0"
   }
 }
