@@ -7,15 +7,15 @@ export interface IUser extends Document {
     firstName: string
     middleName: string
     lastName: string
-    gender: Gender
-    DOB: Date
+    gender: string
+    DOB: string
     email: string
     phone: string
     whatsappPhone: string
     idNumber: string
     // education details
-    yearCompleted: Date
-    schoolCat: schoolCategory
+    yearCompleted: string
+    schoolCat: string
     combination: string
     indexNumber: string
     // parental and guardian info
@@ -36,7 +36,7 @@ export interface IUser extends Document {
     village: string
     // additional details
     disabilities: string
-    maritalStatus: MaritalStatus
+    maritalStatus: string
     work: string
     // documents
     passportImage: string
