@@ -167,4 +167,13 @@ const downloadUserDetails = async (req: Request, res: Response): Promise<any> =>
     }
 }
 
-export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails }
+const searchUsers = async (req: Request, res: Response): Promise<void> => {
+    try {
+        
+    } catch (error) {
+        console.error('Error searching users:', error);
+        res.status(500).json({ error: "An error occurred while searching users" });
+    }
+};
+
+export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers }
