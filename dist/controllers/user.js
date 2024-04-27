@@ -15,8 +15,24 @@ const getAllUsers = async (req, res) => {
 };
 const createUser = async (req, res) => {
     try {
-        const user = new User(req.body);
-        const newUser = await user.save();
+        const { firstName, lastName, fatherNames, motherNames, guardianNames, ...otherFields } = req.body;
+        const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        const formattedLastName = lastName.toUpperCase();
+        const formattedFatherNames = fatherNames.toUpperCase();
+        const formattedMotherNames = motherNames.toUpperCase();
+        const formattedGuardianNames = guardianNames.toUpperCase();
+        const userData = {
+            firstName: formattedFirstName,
+            lastName: formattedLastName,
+            fatherNames: formattedFatherNames,
+            motherNames: formattedMotherNames,
+            guardianNames: formattedGuardianNames,
+            ...otherFields
+        };
+        // Create new user instance
+        const newUser = new User(userData);
+        // Save user to database
+        await newUser.save();
         res.status(201).json({ message: "User created successfully", User: newUser });
     }
     catch (error) {
@@ -128,5 +144,13 @@ const downloadUserDetails = async (req, res) => {
         throw error;
     }
 };
-export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails };
+const searchUsers = async (req, res) => {
+    try {
+    }
+    catch (error) {
+        console.error('Error searching users:', error);
+        res.status(500).json({ error: "An error occurred while searching users" });
+    }
+};
+export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers };
 //# sourceMappingURL=user.js.map

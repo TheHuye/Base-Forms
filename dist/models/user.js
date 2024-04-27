@@ -51,7 +51,7 @@ const userSchema = new Schema({
     motherPhone: {
         type: String,
     },
-    guardian: {
+    guardianNames: {
         type: String,
     },
     guardianPhone: {
@@ -107,6 +107,10 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now,
     },
+});
+userSchema.pre('findOneAndUpdate', function (next) {
+    this._update.updatedAt = new Date();
+    next();
 });
 export default model("User", userSchema);
 //# sourceMappingURL=user.js.map
