@@ -3,10 +3,11 @@ import { Gender, MaritalStatus, schoolCategory } from "../enums/enums"
 
 
 export interface IUser extends Document {
+    _update: any
     // personal details
     firstName: string
     middleName: string
-    lastName: string
+    lastName: string //kinyarwanda name
     gender: string
     DOB: string
     email: string
@@ -23,7 +24,7 @@ export interface IUser extends Document {
     fatherPhone: string
     motherNames: string
     motherPhone: string
-    guardian: string
+    guardianNames: string
     guardianPhone: string
     // location status
     countryOfBirth: string
