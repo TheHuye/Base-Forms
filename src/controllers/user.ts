@@ -22,8 +22,30 @@ const getAllUsers = async (req: Request, res: Response): Promise<any> => {
 const createUser = async (req: Request, res: Response): Promise<any> => {
     try {
         
-        const user: IUser = new User(req.body)
-        const newUser: IUser = await user.save()
+        const { firstName, lastName, fatherNames, motherNames, guardianNames, ...otherFields } = req.body;
+
+        const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+
+        const formattedLastName = lastName.toUpperCase();
+        const formattedFatherNames = fatherNames.toUpperCase();
+        const formattedMotherNames = motherNames.toUpperCase();
+        const formattedGuardianNames = guardianNames.toUpperCase();
+
+
+        const userData: IUser = {
+            firstName: formattedFirstName,
+            lastName: formattedLastName,
+            fatherNames: formattedFatherNames,
+            motherNames: formattedMotherNames,
+            guardianNames: formattedGuardianNames,
+            ...otherFields
+        };
+
+        // Create new user instance
+        const newUser: IUser = new User(userData);
+
+        // Save user to database
+        await newUser.save();
 
         res.status(201).json({ message: "User created successfully", User: newUser})
 
