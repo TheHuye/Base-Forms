@@ -55,7 +55,7 @@ const userSchema: Schema = new Schema(
     motherPhone: {
         type: String,
     },
-    guardian: {
+    guardianNames: {
         type: String,
     },
     guardianPhone: {
@@ -113,5 +113,10 @@ const userSchema: Schema = new Schema(
     },
 }
 );
+
+userSchema.pre<IUser>('findOneAndUpdate', function(next) {
+    this._update.updatedAt = new Date();
+    next();
+});
 
 export default model<IUser>("User", userSchema);
