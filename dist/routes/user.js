@@ -1,9 +1,20 @@
 import { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers } from "../controllers/user.js";
 import { Router } from "express";
-import { validateUserRegister } from "../middleware/userValidation.js";
+import multer from 'multer';
+const storage = multer.diskStorage({
+    destination: 'uploads/',
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
 const router = Router();
 router.get("/", getAllUsers);
-router.post("/", validateUserRegister, createUser);
+router.post("/", upload.fields([
+    { name: 'passportImage' },
+    { name: 'idDocument' },
+    { name: 'resultSlip' }
+]), createUser);
 router.get("/:id", getSingleUser);
 router.put("/:id", updateUser);
 router.get("/export/:id", exportUser);
