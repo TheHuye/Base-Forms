@@ -43,6 +43,11 @@ export interface IUser extends Document {
     passportImage: string
     idDocument: string
     resultSlip: string
+    // image fields
+    docsRef: {
+        key: string;
+        value: any;
+    }
     // dates
     createdAt: Date
     updatedAt: Date
