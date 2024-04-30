@@ -1,6 +1,6 @@
 import User from "../models/user.js";
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import dotenv from 'dotenv';
 dotenv.config();
 // import cloudinary from 'cloudinary';
@@ -24,27 +24,29 @@ const getAllUsers = async (req, res) => {
 };
 const createUser = async (req, res) => {
     try {
-        const { firstName, lastName, fatherNames, motherNames, guardianNames, ...otherFields } = req.body;
+        const { firstName, lastName, fatherNames, motherNames, guardianNames, docsRef, ...otherFields } = req.body;
         if (!req.files || !('passportImage' in req.files) || !('idDocument' in req.files) || !('resultSlip' in req.files)) {
             return res.status(400).json({ error: "One or more files are missing" });
         }
-        const passportImageFileName = `${firstName}_${lastName}_passportImage`;
+        const dateNow = Date.now();
+        const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
         const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['passportImage'][0].path, {
             folder: 'baseForms',
             public_id: passportImageFileName,
         });
-        const pubID = passportImageCloudinaryResponse.public_id;
-        const passportImageDownloadUrl = cloudinary.v2.utils.download_zip_url({ public_ids: [passportImageCloudinaryResponse.public_id] });
-        const idDocumentFileName = `${firstName}_${lastName}_idDocument`;
+        const passportImagePublicId = passportImageCloudinaryResponse.public_id;
+        const idDocumentFileName = `${firstName}_${lastName}_idDocument_${dateNow}`;
         const idDocumentCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['idDocument'][0].path, {
             folder: 'baseForms',
             public_id: idDocumentFileName,
         });
-        const resultSlipFileName = `${firstName}_${lastName}_resultSlip`;
+        const idDocumentPublicId = idDocumentCloudinaryResponse.public_id;
+        const resultSlipFileName = `${firstName}_${lastName}_resultSlip_${dateNow}`;
         const resultSlipCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['resultSlip'][0].path, {
             folder: 'baseForms',
             public_id: resultSlipFileName,
         });
+        const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;
         const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
         const formattedLastName = lastName.toUpperCase();
         const formattedFatherNames = fatherNames.toUpperCase();
@@ -59,11 +61,16 @@ const createUser = async (req, res) => {
             passportImage: passportImageCloudinaryResponse.secure_url,
             idDocument: idDocumentCloudinaryResponse.secure_url,
             resultSlip: resultSlipCloudinaryResponse.secure_url,
+            docsRef: {
+                passportImagePublicId,
+                idDocumentPublicId,
+                resultSlipPublicId
+            },
             ...otherFields
         };
         const newUser = new User(userData);
         await newUser.save();
-        res.status(201).json({ message: "User created successfully", User: newUser, Links: passportImageDownloadUrl, ID: pubID });
+        res.status(201).json({ message: "User created successfully", User: newUser });
     }
     catch (error) {
         console.error('Error creating user:', error);
