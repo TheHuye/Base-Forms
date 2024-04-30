@@ -1,6 +1,8 @@
 import express, { Express } from "express"
 import mongoose from "mongoose"
 import userRoutes from "./routes/user.js"
+import cors from "cors";
+
 
 
 
@@ -11,6 +13,12 @@ const app: Express = express()
 
 const PORT: string | number = process.env.PORT || 4000
 
+
+app.use(cors({
+    origin: [ 'http://127.0.0.1:5500' , 'http://localhost:5500'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 app.use('/api/v1/user', userRoutes)
