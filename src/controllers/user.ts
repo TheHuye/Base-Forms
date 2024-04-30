@@ -79,18 +79,18 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
         const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;        
 
 
-        const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        const formattedLastName = lastName.toUpperCase();
-        const formattedFatherNames = fatherNames.toUpperCase();
-        const formattedMotherNames = motherNames.toUpperCase();
-        const formattedGuardianNames = guardianNames.toUpperCase();
+        // const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+        // const formattedLastName = lastName.toUpperCase();
+        // const formattedFatherNames = fatherNames.toUpperCase();
+        // const formattedMotherNames = motherNames.toUpperCase();
+        // const formattedGuardianNames = guardianNames.toUpperCase();
 
         const userData: IUser = {
-            firstName: formattedFirstName,
-            lastName: formattedLastName,
-            fatherNames: formattedFatherNames,
-            motherNames: formattedMotherNames,
-            guardianNames: formattedGuardianNames,
+            firstName,
+            lastName,
+            fatherNames,
+            motherNames,
+            guardianNames,
             passportImage: passportImageCloudinaryResponse.secure_url,
             idDocument: idDocumentCloudinaryResponse.secure_url,
             resultSlip: resultSlipCloudinaryResponse.secure_url,

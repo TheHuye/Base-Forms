@@ -26,7 +26,7 @@ export interface IUser extends Document {
     motherPhone: string
     guardianNames: string
     guardianPhone: string
-    // location status
+    // location and identity status
     countryOfBirth: string
     countryResidence: string
     countryNationality: string
