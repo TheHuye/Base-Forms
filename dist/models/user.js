@@ -99,6 +99,11 @@ const userSchema = new Schema({
     resultSlip: {
         type: String,
     },
+    docsRef: [{
+            passportImagePublicId: String,
+            idDocumentPublicId: String,
+            resultSlipPublicId: String
+        }],
     createdAt: {
         type: Date,
         default: Date.now,
