@@ -10,6 +10,7 @@ cloudinary.v2.config({
     api_key: process.env.api_key,
     api_secret: process.env.api_secret
 });
+const folderName = process.env.FOLDER_NAME;
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -31,19 +32,19 @@ const createUser = async (req, res) => {
         const dateNow = Date.now();
         const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
         const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['passportImage'][0].path, {
-            folder: 'baseForms',
+            folder: folderName,
             public_id: passportImageFileName,
         });
         const passportImagePublicId = passportImageCloudinaryResponse.public_id;
         const idDocumentFileName = `${firstName}_${lastName}_idDocument_${dateNow}`;
         const idDocumentCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['idDocument'][0].path, {
-            folder: 'baseForms',
+            folder: folderName,
             public_id: idDocumentFileName,
         });
         const idDocumentPublicId = idDocumentCloudinaryResponse.public_id;
         const resultSlipFileName = `${firstName}_${lastName}_resultSlip_${dateNow}`;
         const resultSlipCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['resultSlip'][0].path, {
-            folder: 'baseForms',
+            folder: folderName,
             public_id: resultSlipFileName,
         });
         const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;

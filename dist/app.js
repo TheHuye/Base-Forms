@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userRoutes from "./routes/user.js";
 import cors from "cors";
+const folderName = process.env.FOLDER_NAME;
 import dotenv from 'dotenv';
 dotenv.config();
 const app = express();
@@ -13,7 +14,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use('/api/v1/user', userRoutes);
-const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/Base-Forms';
+const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/${folderName}`;
 mongoose
     .connect(uri)
     .then(() => app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`)))
