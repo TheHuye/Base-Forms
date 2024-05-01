@@ -15,6 +15,8 @@ cloudinary.v2.config({
     api_secret: process.env.api_secret
 });
 
+const folderName = process.env.FOLDER_NAME;
+
 
 const getAllUsers = async (req: Request, res: Response): Promise<any> => {
     try {
@@ -46,7 +48,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
         const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(
             req.files['passportImage'][0].path,
             {
-                folder: 'baseForms',
+                folder: folderName,
                 public_id: passportImageFileName,
             }
         );
@@ -58,7 +60,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
         const idDocumentCloudinaryResponse = await cloudinary.v2.uploader.upload(
             req.files['idDocument'][0].path,
             {
-                folder: 'baseForms',
+                folder: folderName,
                 public_id: idDocumentFileName,
             }
         );
@@ -71,7 +73,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
         const resultSlipCloudinaryResponse = await cloudinary.v2.uploader.upload(
             req.files['resultSlip'][0].path,
             {
-                folder: 'baseForms',
+                folder: folderName,
                 public_id: resultSlipFileName,
             }
         );
