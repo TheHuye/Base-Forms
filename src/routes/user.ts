@@ -18,11 +18,16 @@ const upload = multer({ storage: storage });
 const router: Router = Router()
 
 router.get("/", getAllUsers)
-router.post("/", upload.fields([
-    { name: 'passportImage' },
-    { name: 'idDocument' },
-    { name: 'resultSlip' }
-]), createUser);
+router.post(
+    "/",
+    upload.fields([
+        { name: 'passportImage' },
+        { name: 'idDocument' },
+        { name: 'resultSlip' }
+    ]),
+    validateUserRegister,
+    createUser
+);
 router.get("/:id", getSingleUser)
 router.put("/:id", updateUser)
 router.get("/export/:id", exportUser)
