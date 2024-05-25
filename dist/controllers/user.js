@@ -10,7 +10,7 @@ cloudinary.v2.config({
     api_key: process.env.api_key,
     api_secret: process.env.api_secret
 });
-const folderName = process.env.FOLDER_NAME;
+// const folderName = process.env.FOLDER_NAME;
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
@@ -26,6 +26,14 @@ const getAllUsers = async (req, res) => {
 const createUser = async (req, res) => {
     try {
         const { firstName, lastName, fatherNames, motherNames, guardianNames, docsRef, ...otherFields } = req.body;
+        const formName = req.body.formName;
+        let folderName;
+        if (formName) {
+            folderName = formName;
+        }
+        else {
+            folderName = 'drafts';
+        }
         if (!req.files || !('passportImage' in req.files) || !('idDocument' in req.files) || !('resultSlip' in req.files)) {
             return res.status(400).json({ error: "One or more files are missing" });
         }
@@ -54,6 +62,7 @@ const createUser = async (req, res) => {
         // const formattedMotherNames = motherNames.toUpperCase();
         // const formattedGuardianNames = guardianNames.toUpperCase();
         const userData = {
+            fromForm: formName,
             firstName,
             lastName,
             fatherNames,

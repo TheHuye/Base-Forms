@@ -5,6 +5,7 @@ import { Gender, MaritalStatus, schoolCategory } from "../enums/enums"
 export interface IUser extends Document {
     _update: any
     // personal details
+    fromForm: string
     firstName: string
     middleName: string
     lastName: string //kinyarwanda name
