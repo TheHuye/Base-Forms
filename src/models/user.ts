@@ -4,8 +4,11 @@ import { model, Schema } from "mongoose";
 
 const userSchema: Schema = new Schema(
 {
-    firstName: {
+    fromForm: {
             type: String,
+    },
+    firstName: {
+        type: String,
     },
     middleName: {
         type: String,
