@@ -84,6 +84,7 @@ const getSingleUser = async (req, res) => {
         const singleUser = await User.findOne({ _id: userId });
         if (!singleUser) {
             res.status(404).json({ error: "That user doesn't exist on our database" });
+            return;
         }
         res.status(200).json({ message: "This is the user you requested", user: singleUser });
     }

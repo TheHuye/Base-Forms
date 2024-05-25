@@ -1,5 +1,6 @@
 import { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers } from "../controllers/user.js";
 import { Router } from "express";
+import { validateUserRegister } from "../middleware/userValidation.js";
 import multer from 'multer';
 const storage = multer.diskStorage({
     destination: 'uploads/',
@@ -14,7 +15,7 @@ router.post("/", upload.fields([
     { name: 'passportImage' },
     { name: 'idDocument' },
     { name: 'resultSlip' }
-]), createUser);
+]), validateUserRegister, createUser);
 router.get("/:id", getSingleUser);
 router.put("/:id", updateUser);
 router.get("/export/:id", exportUser);
