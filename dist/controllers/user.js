@@ -35,34 +35,46 @@ const createUser = async (req, res) => {
         else {
             folderName = 'drafts';
         }
-        if (!req.files || !('passportImage' in req.files) || !('idDocument' in req.files) || !('resultSlip' in req.files)) {
-            return res.status(400).json({ error: "One or more files are missing" });
+        let passportImageUrl = 'unnecessary here';
+        let passportImagePublicId = 'unnecessary here';
+        let idDocumentUrl = 'unnecessary here';
+        let idDocumentPublicId = 'unnecessary here';
+        let resultSlipUrl = 'unnecessary here';
+        let resultSlipPublicId = 'unnecessary here';
+        if (req.files && 'passportImage' in req.files) {
+            const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
+            const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['passportImage'][0].path, {
+                folder: folderName,
+                public_id: passportImageFileName,
+            });
+            passportImageUrl = passportImageCloudinaryResponse.secure_url;
+            passportImagePublicId = passportImageCloudinaryResponse.public_id;
         }
-        const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
-        const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['passportImage'][0].path, {
-            folder: folderName,
-            public_id: passportImageFileName,
-        });
-        const passportImagePublicId = passportImageCloudinaryResponse.public_id;
-        const idDocumentFileName = `${firstName}_${lastName}_idDocument_${dateNow}`;
-        const idDocumentCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['idDocument'][0].path, {
-            folder: folderName,
-            public_id: idDocumentFileName,
-        });
-        const idDocumentPublicId = idDocumentCloudinaryResponse.public_id;
-        const resultSlipFileName = `${firstName}_${lastName}_resultSlip_${dateNow}`;
-        const resultSlipCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['resultSlip'][0].path, {
-            folder: folderName,
-            public_id: resultSlipFileName,
-        });
-        const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;
+        if (req.files && 'idDocument' in req.files) {
+            const idDocumentFileName = `${firstName}_${lastName}_idDocument_${dateNow}`;
+            const idDocumentCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['idDocument'][0].path, {
+                folder: folderName,
+                public_id: idDocumentFileName,
+            });
+            idDocumentUrl = idDocumentCloudinaryResponse.secure_url;
+            idDocumentPublicId = idDocumentCloudinaryResponse.public_id;
+        }
+        if (req.files && 'resultSlip' in req.files) {
+            const resultSlipFileName = `${firstName}_${lastName}_resultSlip_${dateNow}`;
+            const resultSlipCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['resultSlip'][0].path, {
+                folder: folderName,
+                public_id: resultSlipFileName,
+            });
+            resultSlipUrl = resultSlipCloudinaryResponse.secure_url;
+            resultSlipPublicId = resultSlipCloudinaryResponse.public_id;
+        }
         const userData = {
             fromForm: formName,
             firstName,
             lastName,
-            passportImage: passportImageCloudinaryResponse.secure_url,
-            idDocument: idDocumentCloudinaryResponse.secure_url,
-            resultSlip: resultSlipCloudinaryResponse.secure_url,
+            passportImage: passportImageUrl,
+            idDocument: idDocumentUrl,
+            resultSlip: resultSlipUrl,
             docsRef: {
                 passportImagePublicId,
                 idDocumentPublicId,
