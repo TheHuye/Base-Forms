@@ -35,7 +35,10 @@ const getAllUsers = async (req: Request, res: Response): Promise<any> => {
 
 const createUser = async (req: Request, res: Response): Promise<any> => {
     try {
-        const { firstName, lastName, fatherNames, motherNames, guardianNames, docsRef, ...otherFields } = req.body;
+
+        const dateNow = Date.now();
+
+        const { firstName, lastName, docsRef, ...otherFields } = req.body;
 
         const formName = req.body.formName;
         let folderName: string
@@ -50,7 +53,6 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
             return res.status(400).json({ error: "One or more files are missing" });
         }
 
-        const dateNow = Date.now();
         
         const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
         
@@ -89,20 +91,10 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
 
         const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;        
 
-
-        // const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        // const formattedLastName = lastName.toUpperCase();
-        // const formattedFatherNames = fatherNames.toUpperCase();
-        // const formattedMotherNames = motherNames.toUpperCase();
-        // const formattedGuardianNames = guardianNames.toUpperCase();
-
         const userData: IUser = {
             fromForm: formName,
             firstName,
             lastName,
-            fatherNames,
-            motherNames,
-            guardianNames,
             passportImage: passportImageCloudinaryResponse.secure_url,
             idDocument: idDocumentCloudinaryResponse.secure_url,
             resultSlip: resultSlipCloudinaryResponse.secure_url,
