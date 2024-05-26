@@ -25,7 +25,8 @@ const getAllUsers = async (req, res) => {
 };
 const createUser = async (req, res) => {
     try {
-        const { firstName, lastName, fatherNames, motherNames, guardianNames, docsRef, ...otherFields } = req.body;
+        const dateNow = Date.now();
+        const { firstName, lastName, docsRef, ...otherFields } = req.body;
         const formName = req.body.formName;
         let folderName;
         if (formName) {
@@ -37,7 +38,6 @@ const createUser = async (req, res) => {
         if (!req.files || !('passportImage' in req.files) || !('idDocument' in req.files) || !('resultSlip' in req.files)) {
             return res.status(400).json({ error: "One or more files are missing" });
         }
-        const dateNow = Date.now();
         const passportImageFileName = `${firstName}_${lastName}_passportImage_${dateNow}`;
         const passportImageCloudinaryResponse = await cloudinary.v2.uploader.upload(req.files['passportImage'][0].path, {
             folder: folderName,
@@ -56,18 +56,10 @@ const createUser = async (req, res) => {
             public_id: resultSlipFileName,
         });
         const resultSlipPublicId = resultSlipCloudinaryResponse.public_id;
-        // const formattedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-        // const formattedLastName = lastName.toUpperCase();
-        // const formattedFatherNames = fatherNames.toUpperCase();
-        // const formattedMotherNames = motherNames.toUpperCase();
-        // const formattedGuardianNames = guardianNames.toUpperCase();
         const userData = {
             fromForm: formName,
             firstName,
             lastName,
-            fatherNames,
-            motherNames,
-            guardianNames,
             passportImage: passportImageCloudinaryResponse.secure_url,
             idDocument: idDocumentCloudinaryResponse.secure_url,
             resultSlip: resultSlipCloudinaryResponse.secure_url,
