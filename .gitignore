@@ -5,3 +5,6 @@
 /uploads
 .vscode
 dist/
+.dockerignore
+Dockerfile
+fly.toml
