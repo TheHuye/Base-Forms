@@ -2,7 +2,7 @@ import { Document } from "mongoose"
 import { Gender, MaritalStatus, schoolCategory } from "../enums/enums"
 
 
-export interface IUser extends Document {
+export interface IForm extends Document {
     _update: any
     // personal details
     fromForm: string

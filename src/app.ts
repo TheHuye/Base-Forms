@@ -1,6 +1,6 @@
 import express, { Express } from "express"
 import mongoose from "mongoose"
-import userRoutes from "./routes/user.js"
+import formRoutes from "./routes/form.js"
 import cors from "cors";
 
 const folderName = process.env.FOLDER_NAME
@@ -24,7 +24,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/form', formRoutes)
 
 const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/${folderName}`;
 

@@ -1,8 +1,8 @@
-import { IUser } from "../types/user"
+import { IForm } from "../types/form"
 import { model, Schema } from "mongoose";
 
 
-const userSchema: Schema = new Schema(
+const formSchema: Schema = new Schema(
 {
     fromForm: {
             type: String,
@@ -122,9 +122,9 @@ const userSchema: Schema = new Schema(
 }
 );
 
-    userSchema.pre<IUser>('findOneAndUpdate', function(next) {
+    formSchema.pre<IForm>('findOneAndUpdate', function(next) {
         this._update.updatedAt = new Date();
         next();
     });
 
-export default model<IUser>("User", userSchema);
+export default model<IForm>("Form", formSchema);
