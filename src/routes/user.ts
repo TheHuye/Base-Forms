@@ -1,4 +1,4 @@
-import { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers } from "../controllers/user.js"
+import { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers, loginUser, logoutUser } from "../controllers/user.js"
 import { Router } from "express"
 import { validateUserRegister } from "../middleware/userValidation.js"
 import multer from 'multer';
@@ -35,5 +35,7 @@ router.get("/archieve/:id", archieveUser)
 router.delete("/:id", deleteUser)
 router.get("/download/:id", downloadUserDetails)
 router.get("/search", searchUsers)
+router.post("/login", loginUser)
+router.get('/logout', logoutUser);
 
 export default router

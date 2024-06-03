@@ -1,6 +1,8 @@
 import { Response, Request, NextFunction  } from "express"
+import bcrypt from "bcryptjs";
 import { IUser } from "../types/user"
 import User from "../models/user.js"
+import jwt from 'jsonwebtoken';
 import * as fs from 'fs';
 import * as path from 'path';
 import dotenv from 'dotenv';
@@ -269,4 +271,54 @@ const searchUsers = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
-export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers }
+const loginUser = async (req: Request, res: Response): Promise<any> => {
+try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ error: "User not found" });
+    }
+    const userID = user.id;
+
+    console.log(userID);
+    
+    if( userID === "66535cca2a297d99a8c61cba") {
+        const { id, firstName, email: userEmail } = user;
+    
+    const token = jwt.sign({ id, name: firstName, email: userEmail }, 'jwtSecret')
+
+    const expiryDate = new Date(Date.now() + 1 * 24 * 60 * 60 * 1000);
+
+    res.cookie(
+        'jwt',
+        token,
+        {httpOnly: true, path: '/', expires: expiryDate},
+        
+    ),
+    
+    res.status(200).json({ message: "User logged in successfully", user: { id, username: firstName, email: userEmail }, token });
+        return;
+    }
+
+    res.status(400).json({ message: "credentials do not match"})
+    
+} catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error" });
+}
+};
+
+const logoutUser = (req: Request, res: Response): void => {
+    if (!req.userId) {
+        res.status(401).json({ error: 'User is not logged in' });
+        return;
+    }
+
+    res.clearCookie('jwt', { path: '/' });
+
+    res.status(200).json({ message: 'User logged out successfully' });
+};
+
+export { getAllUsers, createUser, getSingleUser, updateUser, exportUser, archieveUser, deleteUser, downloadUserDetails, searchUsers, loginUser, logoutUser }
