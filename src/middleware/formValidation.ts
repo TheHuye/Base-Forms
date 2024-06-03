@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
 
-const userSchema = Joi.object({
+const formSchema = Joi.object({
   firstName: // english name
     Joi.string()
       .required()
@@ -224,10 +224,10 @@ const userSchema = Joi.object({
   }).unknown();
 
 
-const validateUserRegister = async (req: Request, res: Response, next: NextFunction) => {
+const validateFormSubmission = async (req: Request, res: Response, next: NextFunction) => {
 try {
 
-    const { error } = await userSchema.validate(req.body, { abortEarly: false });
+    const { error } = await formSchema.validate(req.body, { abortEarly: false });
     
     if (error) {
     
@@ -240,10 +240,10 @@ try {
 
 } catch (err) {
     
-    console.error('Error validating user Creation:', err);
+    console.error('Error validating form submission:', err);
     
     res.status(500).json({ error: 'Internal server error' });
 }
 };
 
-export { validateUserRegister };
+export { validateFormSubmission };
