@@ -13,7 +13,7 @@ dotenv.config();
 
 const app: Express = express()
 
-const PORT: string | number = process.env.PORT || 4000
+const PORT: string | number = process.env.PORT || 3000
 const URL: string = process.env.BACKEND_URL || `http://localhost${PORT}`
 
 
@@ -34,7 +34,7 @@ const startServer = async () => {
         await mongoose.connect(uri);
         console.log('Database connected successfully');
 
-        app.listen(PORT, () => {
+        app.listen(3000, '0.0.0.0', () => {
             console.log(`Server running on ${URL}/api/v1`);
         });
     } catch (error) {
