@@ -65,12 +65,10 @@ const adminAuthJWT = (req: Request, res: Response, next: NextFunction) => {
           token = parts[1];
       }
   }
-  console.log(req.cookies);  
   
-  if (!token && req.cookies && req.cookies.jwt) {
+  if (!token) {
     token = req.cookies.jwt;
   }
-
   
   if (!token) {
     return res.status(401).json({ error: 'Authentication required. Please log in.' });
