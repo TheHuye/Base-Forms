@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import formRoutes from "./routes/form.js"
 import userRoutes from "./routes/user.js"
 import cors from "cors";
+import cookieParser from "cookie-parser"
 
 const folderName = process.env.FOLDER_NAME
 
@@ -24,6 +25,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use('/api/v1/form', formRoutes)
 app.use('/api/v1/user', userRoutes)
