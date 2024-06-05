@@ -27,8 +27,8 @@ app.use(cors({
 
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/v1/form', formRoutes)
-app.use('/api/v1/user', userRoutes)
+app.use('/api/form', formRoutes)
+app.use('/api/user', userRoutes)
 
 const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/${folderName}`;
 
@@ -39,7 +39,7 @@ const startServer = async () => {
         console.log('Database connected successfully');
 
         app.listen(3000, '0.0.0.0', () => {
-            console.log(`Server running on ${URL}/api/v1`);
+            console.log(`Server running on ${URL}/api`);
         });
     } catch (error) {
         console.error('Database connection failed:', error);
