@@ -1,5 +1,5 @@
 import { Document } from "mongoose"
-import { Gender, MaritalStatus, schoolCategory } from "../enums/enums"
+import { Gender, MaritalStatus, schoolCategory } from "../enums/enums.js"
 
 
 export interface IForm extends Document {
