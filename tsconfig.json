@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "es6",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "ESNext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "outDir": "dist",
