@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "concurrently \"tsc -w\" \"nodemon dist/app.js\""
+    "devstart": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
+    "start": "npm run build && node dist/app.js"
   },
   "keywords": [],
   "author": "",
