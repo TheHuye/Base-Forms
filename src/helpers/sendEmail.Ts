@@ -27,4 +27,4 @@ const sendEmail = (email: any, subject: any, content: any) => {
 });
 };
 
-export { sendEmail };
+export  default sendEmail;
