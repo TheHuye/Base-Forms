@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction  } from "express"
-import sendEmail  from "./sendEmail.js"
+import sendEmail from "./emailConfig.js" 
 import dotenv from 'dotenv';
 dotenv.config();
 
