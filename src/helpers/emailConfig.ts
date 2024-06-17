@@ -22,7 +22,7 @@ const sendEmail = (email: any, subject: any, content: any) => {
     if (error) {
         console.error(error);
     } else {
-        console.log(`Verification Email Sent: ${info.response}`);
+        console.log(`Email was successecfully sent to: ${email}\nGoogle's Response: ${info.response}`);
     }
 });
 };
