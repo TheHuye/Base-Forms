@@ -15,12 +15,12 @@ dotenv.config();
 
 const app: Express = express()
 
-const PORT: number = Number(process.env.PORT) || 3000;
-const URL: string = process.env.BACKEND_URL || `http://localhost${PORT}`
+const PORT: number = Number(process.env.PORT) || 5433;
+const URL: string = process.env.BACKEND_URL || `http://localhost:${PORT}`
 
 
 app.use(cors({
-    origin: [ 'http://127.0.0.1:5500' , 'http://localhost:5500', 'https://app.thehuye.com', 'https://derrick-nuby.github.io'],
+    origin: '*',
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -29,6 +29,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use('/api/form', formRoutes)
 app.use('/api/user', userRoutes)
+app.get('/', (req, res) => {
+    res.send('welcome to TheHuye');
+});
 
 const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/${folderName}`;
 
@@ -39,7 +42,7 @@ const startServer = async () => {
         console.log('Database connected successfully');
 
         app.listen(PORT, '0.0.0.0', () => {
-            console.log(`Server running on ${URL}/api`);
+            console.log(`Server running on ${URL}`);
         });
     } catch (error) {
         console.error('Database connection failed:', error);

@@ -1,10 +1,13 @@
-/node_modules
-/draft
+node_modules/
+draft/
 .env
-/exports
-/uploads
+exports/
+uploads/
 .vscode
 dist/
 .dockerignore
 Dockerfile
 fly.toml
+app.yaml
+cloudbuild.yaml
+.gcloudignore
