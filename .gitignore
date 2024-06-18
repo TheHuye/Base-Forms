@@ -12,3 +12,5 @@ app.yaml
 cloudbuild.yaml
 .gcloudignore
 1cloudbuild.yaml
+compose.yaml
+README.Docker.md

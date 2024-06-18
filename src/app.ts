@@ -15,7 +15,7 @@ dotenv.config();
 
 const app: Express = express()
 
-const PORT: number = Number(process.env.PORT) || 5433;
+const PORT: number = Number(process.env.PORT) || 5135;
 const URL: string = process.env.BACKEND_URL || `http://localhost:${PORT}`
 
 
@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 });
 
 const uri = process.env.MONGODB_URI || `mongodb://localhost:27017/${folderName}`;
-
 
 const startServer = async () => {
     try {
