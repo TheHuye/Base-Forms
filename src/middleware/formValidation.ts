@@ -19,8 +19,10 @@ const formSchema = Joi.object({
     }),
   middleName:
     Joi.string()
+      .allow('')
       .messages({
-    }),
+        'string.base': 'Middle Name must be a string',
+      }),
 
   lastName:
     Joi.string()
