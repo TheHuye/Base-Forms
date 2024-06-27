@@ -32,7 +32,7 @@ const pickEmailBasedOnForm = (name: any, email: any, formName: any, userData: an
                     </div>
                 </div>
             </div>`
-            sendEmail(email, subject, content);
+            sendEmail({email, subject, content});
         } else if (formName === "collectData") {
             const subject = 'Thank You For Filling Our Form, Please Verify Your Details Below';
             const content = `
@@ -59,7 +59,7 @@ const pickEmailBasedOnForm = (name: any, email: any, formName: any, userData: an
                     </div>
                 </div>
                 </div>`
-            sendEmail(email, subject, content);
+            sendEmail({email, subject, content});
         } else if (formName === "internship") {
             const subject = 'Thank You For Filling Our Form, Please Verify Your Details Below';
             const content = `
@@ -86,7 +86,7 @@ const pickEmailBasedOnForm = (name: any, email: any, formName: any, userData: an
                     </div>
                 </div>
                 </div>`
-            sendEmail(email, subject, content);
+            sendEmail({email, subject, content});
         } else {
             const subject = 'Thank You For Filling Our Form, Please Verify Your Details Below';
             const content = `
@@ -113,7 +113,7 @@ const pickEmailBasedOnForm = (name: any, email: any, formName: any, userData: an
                     </div>
                 </div>
                 </div>`
-            sendEmail(email, subject, content);
+            sendEmail({email, subject, content});
         }
         
     } catch (error) {
