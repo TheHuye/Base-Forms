@@ -28,7 +28,10 @@ const getAllFormSubmissions = async (req: Request, res: Response): Promise<any> 
             return res.status(404).json({ error: "There are currently no form submissions found in the database! Thank you for checking :)"})
         }
 
-        return res.status(200).json({ message: "These are all the form submissions you have now!", forms})
+        return res.status(200).json({ 
+            message: "These are all the form submissions you have now!", 
+            count: forms.length,
+            forms})
     } catch (error) {
     throw error
     }
