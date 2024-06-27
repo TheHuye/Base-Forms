@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction  } from "express"
 import { IForm } from "../types/form"
-import { pickEmailBasedOnForm } from "../helpers/formSubmitSendEmail.js"
+// import { pickEmailBasedOnForm } from "../helpers/formSubmitSendEmail.js"
 import Form from "../models/form.js"
 import * as fs from 'fs';
 import * as path from 'path';
@@ -116,7 +116,7 @@ const createSubmission = async (req: Request, res: Response): Promise<any> => {
 
         await newForm.save();
 
-        pickEmailBasedOnForm(firstName, formData.email, formName, newForm)
+        // pickEmailBasedOnForm(firstName, formData.email, formName, newForm)
 
         res.status(201).json({ message: "Form submitted successfully", Form: newForm })
 
