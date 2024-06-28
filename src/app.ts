@@ -1,34 +1,43 @@
-import express, { Express } from "express"
-import mongoose from "mongoose"
-import formRoutes from "./routes/form.js"
-import userRoutes from "./routes/user.js"
+import express, { Express } from "express";
+import mongoose from "mongoose";
+import formRoutes from "./routes/form.js";
+import userRoutes from "./routes/user.js";
 import cors from "cors";
-import cookieParser from "cookie-parser"
-
-const folderName = process.env.FOLDER_NAME
-
-
-
-
+import cookieParser from "cookie-parser";
 import dotenv from 'dotenv';
+
 dotenv.config();
 
-const app: Express = express()
+const folderName = process.env.FOLDER_NAME;
+
+const app: Express = express();
 
 const PORT: number = Number(process.env.PORT) || 5135;
-const URL: string = process.env.BACKEND_URL || `http://localhost:${PORT}`
+const URL: string = process.env.BACKEND_URL || `http://localhost:${PORT}`;
 
+const allowedOrigins = [
+    '*',
+    'https://thehuye.github.io',
+    'https://base-forms.onrender.com',
+    /^http:\/\/127\.0\.0\.1:\d+$/
+];
 
 app.use(cors({
-    origin: '*',
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes('*') || allowedOrigins.some(o => typeof o === 'string' && o === origin) || allowedOrigins.some(o => o instanceof RegExp && o.test(origin))) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/form', formRoutes)
-app.use('/api/user', userRoutes)
+app.use('/api/form', formRoutes);
+app.use('/api/user', userRoutes);
 app.get('/', (req, res) => {
     res.send('welcome to TheHuye');
 });
@@ -51,6 +60,4 @@ const startServer = async () => {
 
 startServer();
 
-
-
-export default app
+export default app;
