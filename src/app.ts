@@ -20,7 +20,7 @@ const URL: string = process.env.BACKEND_URL || `http://localhost:${PORT}`
 
 
 app.use(cors({
-    origin: [ '*', 'https://thehuye.github.io', 'https://base-forms.onrender.com'],
+    origin: '*',
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
