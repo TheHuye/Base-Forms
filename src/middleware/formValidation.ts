@@ -6,7 +6,7 @@ const formSchema = Joi.object({
     Joi.string()
       .required()
       .min(3)
-      .pattern(new RegExp('^[a-zA-Z0-9]+$'))
+      .pattern(new RegExp('^[a-zA-Z0-9 ]+$'))
       .custom((value: string, helpers) => {
         // Capitalize the first letter of the first name
         const capitalizedFirstName = value.charAt(0).toUpperCase() + value.slice(1);
@@ -27,7 +27,7 @@ const formSchema = Joi.object({
   lastName:
     Joi.string()
       .required()
-      .pattern(new RegExp('^[a-zA-Z0-9]+$'))
+      .pattern(new RegExp('^[a-zA-Z0-9 ]+$'))
       .messages({
           'string.empty': 'last Name is required!',
           'string.pattern.base': 'Name must contain only alphanumeric characters',
